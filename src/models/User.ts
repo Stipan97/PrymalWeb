@@ -7,3 +7,9 @@ export interface User {
   profileImageUser: string;
   profileImagePet: string;
 }
+
+export interface UserState {
+  data?: User;
+  isLoading?: boolean;
+  error?: string;
+}

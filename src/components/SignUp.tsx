@@ -1,9 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { setCurrentUser } from '../actions/currentUserActions';
 import { auth, db } from '../configs/firebase';
 
 export const SignUp: FC = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -73,7 +76,7 @@ export const SignUp: FC = () => {
             'https://firebasestorage.googleapis.com/v0/b/prymalweb.appspot.com/o/holders%2FdogProfileHolder.png?alt=media&token=4bbaef77-c05b-4605-98eb-75bec06e01cb',
         });
       auth.signInWithEmailAndPassword(email, password).then(() => {
-        //dispatch
+        dispatch(setCurrentUser());
         history.push('/home');
       });
     });
