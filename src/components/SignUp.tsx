@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { setCurrentUser } from '../actions/currentUserActions';
 import { auth, db } from '../configs/firebase';
 
@@ -130,6 +130,7 @@ export const SignUp: FC = () => {
       <button onClick={onClickSignUp} disabled={buttonChecker}>
         SignUp
       </button>
+      <Link to="/login">Already have account? Click here.</Link>
     </div>
   );
 };
