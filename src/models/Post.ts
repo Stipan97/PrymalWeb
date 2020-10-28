@@ -5,4 +5,5 @@ export interface Post {
   uploadTime: number;
   description: string;
   imageUrl: string;
+  likes: number;
 }
