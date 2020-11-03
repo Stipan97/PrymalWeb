@@ -6,10 +6,12 @@ import { Post } from '../models/Post';
 export const Home: FC = () => {
   const [postInfo, setPostInfo] = useState<Post[]>([]);
 
+  const tmp = ['bla', 's9XnffL3VuTVB1Crzz1ny2QmVUh1'];
+
   useEffect(() => {
     setPostInfo([]);
     db.collection('posts')
-      .where('userId', '==', 's9XnffL3VuTVB1Crzz1ny2QmVUh1')
+      .where('userId', 'in', tmp)
       .orderBy('uploadTime', 'desc')
       .get()
       .then((query) => {
