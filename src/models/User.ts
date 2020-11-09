@@ -13,3 +13,7 @@ export interface UserState {
   isLoading?: boolean;
   error?: string;
 }
+
+export interface CurrentUserId {
+  id: string;
+}
