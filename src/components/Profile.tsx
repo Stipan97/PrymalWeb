@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { db } from '../configs/firebase';
 import { Post } from '../models/Post';
-import { CurrentUserId, User } from '../models/User';
+import { User } from '../models/User';
+
+interface ProfileProps {
+  userId: string;
+}
 
 export const Profile: FC = () => {
-  const location = useLocation();
-  const userId = (location.state as CurrentUserId).id;
+  const { userId } = useParams<ProfileProps>();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<Post[]>([]);
 

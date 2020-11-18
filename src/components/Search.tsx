@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { db } from '../configs/firebase';
 import { User } from '../models/User';
 import { Follow } from './Follow';
@@ -37,9 +38,9 @@ export const Search: FC = () => {
       <input onChange={onChangeSearch} type="text" />
       {users.map((user) => (
         <div key={user.id}>
-          <p>
+          <Link to={`/profile/${user.id}`}>
             {user.firstName} {user.lastName} - {user.petName}
-          </p>
+          </Link>
           <Follow id={user.id} />
         </div>
       ))}
