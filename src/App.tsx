@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import { Header } from './components/Header';
-import { Home } from './components/Home';
-import { LogIn } from './components/LogIn';
-import { Notifications } from './components/Notifications';
-import { Profile } from './components/Profile';
-import { Search } from './components/Search';
-import { SignUp } from './components/SignUp';
+import { Header } from './components/Header/Header';
+import { Home } from './components/HomeFeed/Home';
+import { LogIn } from './components/LoginRegisterForm/LogIn';
+import { Notifications } from './components/Notifications/Notifications';
+import { Profile } from './components/Profile/Profile';
+import { Search } from './components/Search/Search';
+import { SignUp } from './components/LoginRegisterForm/SignUp';
 import { Test } from './components/TEST';
+import { UploadPost } from './components/UploadImage/UploadPost';
+import './style/App.css';
 
 export const App = () => {
   return (
@@ -21,6 +23,8 @@ export const App = () => {
           <Route path="/notifications" component={Notifications} />
           <Route path="/search" component={Search} />
           <Route path="/profile/:userId" component={Profile} />
+          <Route path="/uploadPost" component={UploadPost} />
+
           <Route path="/test" component={Test} />
         </Switch>
       </Router>

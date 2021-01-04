@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { db } from '../configs/firebase';
-import { RootReducerState } from '../models/RootReducer';
+import { db } from '../../configs/firebase';
+import { RootReducerState } from '../../models/RootReducer';
 
 interface FollowProps {
   id: string;
@@ -17,6 +17,17 @@ export const Follow: FC<FollowProps> = ({ id }) => {
       fromUserFollow: currentUser?.id,
       toUserFollow: id,
     });
+
+    let time = Date.now();
+    const notifRef = db.collection('notifications').doc();
+    notifRef.set({
+      id: notifRef.id,
+      fromUserId: currentUser?.id,
+      toUserId: id,
+      type: 'Started following you.',
+      notifTime: time,
+    });
+
     setButtonState(true);
   };
 
@@ -53,11 +64,15 @@ export const Follow: FC<FollowProps> = ({ id }) => {
         <></>
       ) : buttonState ? (
         <div>
-          <button onClick={onClickUnfollow}>Unfollow</button>
+          <button className="btn-search" onClick={onClickUnfollow}>
+            Unfollow
+          </button>
         </div>
       ) : (
         <div>
-          <button onClick={onClickFollow}>Follow</button>
+          <button className="btn-search" onClick={onClickFollow}>
+            Follow
+          </button>
         </div>
       )}
     </div>

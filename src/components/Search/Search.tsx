@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../configs/firebase';
-import { User } from '../models/User';
+import { db } from '../../configs/firebase';
+import { User } from '../../models/User';
 import { Follow } from './Follow';
+import './Search.css';
 
 export const Search: FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -34,16 +35,20 @@ export const Search: FC = () => {
   }, []);
 
   return (
-    <div>
-      <input onChange={onChangeSearch} type="text" />
-      {users.map((user) => (
-        <div key={user.id}>
-          <Link to={`/profile/${user.id}`}>
-            {user.firstName} {user.lastName} - {user.petName}
-          </Link>
-          <Follow id={user.id} />
-        </div>
-      ))}
+    <div className="search-container">
+      <div className="input-container">
+        <input onChange={onChangeSearch} type="text" placeholder="Search" />
+      </div>
+      <div className="results-container">
+        {users.map((user) => (
+          <div className="search-result" key={user.id}>
+            <Link className="search-name" to={`/profile/${user.id}`}>
+              {user.firstName} {user.lastName} - {user.petName}
+            </Link>
+            <Follow id={user.id} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

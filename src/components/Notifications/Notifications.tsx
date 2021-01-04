@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
-import { auth, db } from '../configs/firebase';
-import { Notification } from '../models/Notification';
-import { User } from '../models/User';
+import { auth, db } from '../../configs/firebase';
+import { Notification } from '../../models/Notification';
+import { User } from '../../models/User';
+import { DeleteNotif } from './DeleteNotif';
+import './Notifications.css';
 
 export const Notifications: FC = () => {
   let notifFromId: string[] = [];
@@ -13,12 +15,15 @@ export const Notifications: FC = () => {
     const unsubscribe = db
       .collection('notifications')
       .where('toUserId', '==', auth.currentUser?.uid)
+      .limit(10)
+      .orderBy('notifTime', 'desc')
       .onSnapshot(
         {
           includeMetadataChanges: true,
         },
         (query) => {
           setNotifications([]);
+          notifFromId = [];
           query.forEach((doc) => {
             setNotifications((oldArray) => [
               ...oldArray,
@@ -43,17 +48,22 @@ export const Notifications: FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="notif-container">
       {notifications.map((notification) => (
-        <div key={notification.id}>
-          <h1>
-            {
-              users.find((obj) => {
+        <div className="notif-item-container" key={notification.id}>
+          <div>
+            <h1 className="user-name">
+              {users.find((obj) => {
                 return obj.id === notification.fromUserId;
-              })?.firstName
-            }
-          </h1>
-          <p>{notification.type}</p>
+              })?.firstName +
+                ' ' +
+                users.find((obj) => {
+                  return obj.id === notification.fromUserId;
+                })?.lastName}
+            </h1>
+            <p className="description">{notification.type}</p>
+          </div>
+          <DeleteNotif notifId={notification.id} />
         </div>
       ))}
     </div>
