@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { setCurrentUser } from '../../actions/currentUserActions';
 import { auth } from '../../configs/firebase';
+import { FirebaseAuthError } from '../../models/FirebaseAuthError';
 
 export const LogIn: FC = () => {
   const dispatch = useDispatch();
@@ -21,10 +22,18 @@ export const LogIn: FC = () => {
   };
 
   const onClickLogIn = () => {
-    auth.signInWithEmailAndPassword(email, password).then(() => {
-      dispatch(setCurrentUser());
-      history.push('/home');
-    });
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        dispatch(setCurrentUser());
+        history.push('/home');
+      })
+      .catch((e) => {
+        let code = (e as FirebaseAuthError).code;
+        if (code === 'auth/wrong-password' || code === 'auth/user-not-found') {
+          setErrorMsg('Wrong email or password.');
+        }
+      });
   };
 
   const checkEmail = (event: FocusEvent<HTMLInputElement>) => {

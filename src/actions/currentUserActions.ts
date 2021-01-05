@@ -52,8 +52,6 @@ export const setCurrentUser = (): ThunkAction<
 };
 
 export const setCurrentUserLogout = () => {
-  console.log('poziv');
-
   return {
     type: LOGOUT_CURRENT_USER,
   };

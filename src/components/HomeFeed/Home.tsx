@@ -26,17 +26,6 @@ export const Home: FC = () => {
             followedUsersId.push((doc.data() as Follow).toUserFollow);
           });
 
-          // setPostInfo([]);
-          // db.collection('posts')
-          //   .where('userId', 'in', followedUsersId)
-          //   .orderBy('uploadTime', 'desc')
-          //   .get()
-          //   .then((query) => {
-          //     query.forEach((doc) => {
-          //       setPostInfo((oldArray) => [...oldArray, doc.data() as Post]);
-          //     });
-          //   });
-
           db.collection('users')
             .doc(currentUser.id)
             .get()

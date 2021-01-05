@@ -7,10 +7,9 @@ import { Notifications } from './components/Notifications/Notifications';
 import { Profile } from './components/Profile/Profile';
 import { Search } from './components/Search/Search';
 import { SignUp } from './components/LoginRegisterForm/SignUp';
-import { Test } from './components/TEST';
 import { UploadPost } from './components/UploadImage/UploadPost';
-import './style/App.css';
 import { Logout } from './components/Logout/Logout';
+import './style/App.css';
 
 export const App = () => {
   return (
@@ -26,8 +25,6 @@ export const App = () => {
           <Route path="/profile/:userId" component={Profile} />
           <Route path="/uploadPost" component={UploadPost} />
           <Route path="/logout" component={Logout} />
-
-          <Route path="/test" component={Test} />
         </Switch>
       </Router>
     </div>

@@ -79,7 +79,6 @@ export const Follow: FC<FollowProps> = ({ id }) => {
       ) : (
         <></>
       )}
-      {}
     </div>
   );
 };

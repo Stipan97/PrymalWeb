@@ -67,7 +67,6 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
   };
 
   useEffect(() => {
-    console.log('useeffect');
     if (currentUser) {
       db.collection('likes')
         .where('fromUser', '==', currentUser.id)

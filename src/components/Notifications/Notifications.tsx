@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { auth, db } from '../../configs/firebase';
+import { db } from '../../configs/firebase';
 import { Notification } from '../../models/Notification';
 import { RootReducerState } from '../../models/RootReducer';
 import { User } from '../../models/User';

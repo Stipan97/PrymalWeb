@@ -165,5 +165,7 @@ body {
 }
 
 .container-error-message {
+    display: flex;
+    justify-content: center;
     color: #9b111e;
 }

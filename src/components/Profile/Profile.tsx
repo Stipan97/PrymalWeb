@@ -67,7 +67,7 @@ export const Profile: FC = () => {
       </div>
       <div className="posts-container">
         {posts.map((post) => (
-          <div className="image-container post-list">
+          <div key={post.id} className="image-container post-list">
             <img
               className="image"
               key={post.id}
