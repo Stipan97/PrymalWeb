@@ -1,6 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { auth, db } from '../configs/firebase';
 import {
+  LOGOUT_CURRENT_USER,
   SET_CURRENT_USER,
   SET_ERROR_CURRENT_USER,
   SET_LOADING_CURRENT_USER,
@@ -21,10 +22,15 @@ interface SetCurrentUserInfoErrorAction {
   type: typeof SET_ERROR_CURRENT_USER;
 }
 
+interface LogoutCurrentUserInfoAction {
+  type: typeof LOGOUT_CURRENT_USER;
+}
+
 export type CurrentUserActions =
   | SetCurrentUserInfoAction
   | SetCurrentUserInfoLoadingAction
-  | SetCurrentUserInfoErrorAction;
+  | SetCurrentUserInfoErrorAction
+  | LogoutCurrentUserInfoAction;
 
 export const setCurrentUser = (): ThunkAction<
   void,
@@ -42,5 +48,13 @@ export const setCurrentUser = (): ThunkAction<
           payload: doc.data() as User,
         });
       });
+  };
+};
+
+export const setCurrentUserLogout = () => {
+  console.log('poziv');
+
+  return {
+    type: LOGOUT_CURRENT_USER,
   };
 };

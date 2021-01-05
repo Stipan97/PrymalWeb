@@ -12,13 +12,8 @@ import { User } from '../../models/User';
 export const Home: FC = () => {
   const currentUser = useSelector((state: RootReducerState) => state.user.data);
   const [postInfo, setPostInfo] = useState<Post[]>([]);
-  const [likeState, setLikeState] = useState(false);
   const [userProfileImage, setUserProfileImage] = useState('');
   let followedUsersId: string[] = [];
-
-  const onChangeLikeState = () => {
-    setLikeState(!likeState);
-  };
 
   useEffect(() => {
     if (currentUser) {
@@ -30,18 +25,18 @@ export const Home: FC = () => {
           query.forEach((doc) => {
             followedUsersId.push((doc.data() as Follow).toUserFollow);
           });
-        })
-        .finally(() => {
-          setPostInfo([]);
-          db.collection('posts')
-            .where('userId', 'in', followedUsersId)
-            .orderBy('uploadTime', 'desc')
-            .get()
-            .then((query) => {
-              query.forEach((doc) => {
-                setPostInfo((oldArray) => [...oldArray, doc.data() as Post]);
-              });
-            });
+
+          // setPostInfo([]);
+          // db.collection('posts')
+          //   .where('userId', 'in', followedUsersId)
+          //   .orderBy('uploadTime', 'desc')
+          //   .get()
+          //   .then((query) => {
+          //     query.forEach((doc) => {
+          //       setPostInfo((oldArray) => [...oldArray, doc.data() as Post]);
+          //     });
+          //   });
+
           db.collection('users')
             .doc(currentUser.id)
             .get()
@@ -49,8 +44,21 @@ export const Home: FC = () => {
               setUserProfileImage((query.data() as User).profileImageUser);
             });
         });
+
+      const unsubscribe = db
+        .collection('posts')
+        .where('userId', 'in', followedUsersId)
+        .orderBy('uploadTime', 'desc')
+        .onSnapshot({ includeMetadataChanges: true }, (query) => {
+          setPostInfo([]);
+          query.forEach((doc) => {
+            setPostInfo((oldArray) => [...oldArray, doc.data() as Post]);
+          });
+        });
+
+      return () => unsubscribe();
     }
-  }, [currentUser, likeState]);
+  }, [currentUser]);
 
   return (
     <div className="home-container">
@@ -72,15 +80,11 @@ export const Home: FC = () => {
             </div>
             <p>{post.description}</p>
             <p>{post.likes} likes</p>
-            <Like
-              postId={post.id}
-              userId={currentUser?.id}
-              onchange={onChangeLikeState}
-            />
+            <Like postId={post.id} userId={currentUser?.id} />
           </div>
         ))
       ) : (
-        <div>You are not logged in</div>
+        <div>You are not logged in.</div>
       )}
     </div>
   );

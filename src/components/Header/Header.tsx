@@ -28,6 +28,9 @@ export const Header: FC = () => {
             <Link className="navbar-item" to="/uploadPost">
               Upload Post
             </Link>
+            <Link className="navbar-item" to="/logout">
+              Logout
+            </Link>
           </div>
         </nav>
       ) : (

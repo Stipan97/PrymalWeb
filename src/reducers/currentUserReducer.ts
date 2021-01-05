@@ -1,5 +1,6 @@
 import { CurrentUserActions } from '../actions/currentUserActions';
 import {
+  LOGOUT_CURRENT_USER,
   SET_CURRENT_USER,
   SET_ERROR_CURRENT_USER,
   SET_LOADING_CURRENT_USER,
@@ -35,6 +36,11 @@ export const currentUserReducer = (
         data: state,
         isLoading: false,
         error: 'Error loading current user.',
+      };
+    }
+    case LOGOUT_CURRENT_USER: {
+      return {
+        state: undefined,
       };
     }
     default: {

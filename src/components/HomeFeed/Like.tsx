@@ -8,10 +8,9 @@ import { RootReducerState } from '../../models/RootReducer';
 interface LikeProps {
   postId: string;
   userId: string;
-  onchange: Function;
 }
 
-export const Like: FC<LikeProps> = ({ postId, userId, onchange }) => {
+export const Like: FC<LikeProps> = ({ postId, userId }) => {
   const currentUser = useSelector((state: RootReducerState) => state.user.data);
   const [buttonState, setButtonState] = useState(false);
 
@@ -39,7 +38,6 @@ export const Like: FC<LikeProps> = ({ postId, userId, onchange }) => {
         db.collection('posts')
           .doc(postId)
           .update({ likes: likeCounter + 1 });
-        onchange();
       });
 
     setButtonState(true);
@@ -65,11 +63,11 @@ export const Like: FC<LikeProps> = ({ postId, userId, onchange }) => {
         db.collection('posts')
           .doc(postId)
           .update({ likes: likeCounter - 1 });
-        onchange();
       });
   };
 
   useEffect(() => {
+    console.log('useeffect');
     if (currentUser) {
       db.collection('likes')
         .where('fromUser', '==', currentUser.id)

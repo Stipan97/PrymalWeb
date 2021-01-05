@@ -60,21 +60,26 @@ export const Follow: FC<FollowProps> = ({ id }) => {
 
   return (
     <div>
-      {currentUser?.id === id ? (
-        <></>
-      ) : buttonState ? (
-        <div>
-          <button className="btn-search" onClick={onClickUnfollow}>
-            Unfollow
-          </button>
-        </div>
+      {currentUser ? (
+        currentUser.id === id ? (
+          <></>
+        ) : buttonState ? (
+          <div>
+            <button className="btn-search" onClick={onClickUnfollow}>
+              Unfollow
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button className="btn-search" onClick={onClickFollow}>
+              Follow
+            </button>
+          </div>
+        )
       ) : (
-        <div>
-          <button className="btn-search" onClick={onClickFollow}>
-            Follow
-          </button>
-        </div>
+        <></>
       )}
+      {}
     </div>
   );
 };
