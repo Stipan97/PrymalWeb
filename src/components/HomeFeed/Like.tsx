@@ -15,11 +15,13 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
   const [buttonState, setButtonState] = useState(false);
 
   const onClickLike = () => {
+    //dodajem like
     db.collection('likes').add({
       fromUser: currentUser?.id,
       toPost: postId,
     });
 
+    //like notifikacija
     let time = Date.now();
     const notifRef = db.collection('notifications').doc();
     notifRef.set({
@@ -30,6 +32,7 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
       notifTime: time,
     });
 
+    //updateam broj likeova na postu
     db.collection('posts')
       .doc(postId)
       .get()
@@ -44,6 +47,7 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
   };
 
   const onClickUnLike = () => {
+    //brišem like
     db.collection('likes')
       .where('fromUser', '==', currentUser?.id)
       .where('toPost', '==', postId)
@@ -55,6 +59,7 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
         setButtonState(false);
       });
 
+    //updateam broj likeova na postu
     db.collection('posts')
       .doc(postId)
       .get()
@@ -83,17 +88,13 @@ export const Like: FC<LikeProps> = ({ postId, userId }) => {
   return (
     <div>
       {buttonState ? (
-        <div>
-          <button className="btn-like" onClick={onClickUnLike}>
-            Unlike
-          </button>
-        </div>
+        <button className="btn-like" onClick={onClickUnLike}>
+          Unlike
+        </button>
       ) : (
-        <div>
-          <button className="btn-like" onClick={onClickLike}>
-            Like
-          </button>
-        </div>
+        <button className="btn-like" onClick={onClickLike}>
+          Like
+        </button>
       )}
     </div>
   );
